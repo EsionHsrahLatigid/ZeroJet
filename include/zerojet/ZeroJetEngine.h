@@ -3,6 +3,7 @@
 #include "zerojet/ZeroJetDspPrimitives.h"
 
 #include <array>
+#include <memory>
 
 namespace zerojet
 {
@@ -67,8 +68,8 @@ private:
     float rightFeedback = 0.0f;
     float leftDamp = 0.0f;
     float rightDamp = 0.0f;
-    DelayBuffer leftDelay {};
-    DelayBuffer rightDelay {};
+    std::unique_ptr<DelayBuffer> leftDelay;
+    std::unique_ptr<DelayBuffer> rightDelay;
 };
 
 } // namespace zerojet

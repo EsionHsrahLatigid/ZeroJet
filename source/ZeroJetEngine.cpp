@@ -23,6 +23,8 @@ constexpr float ceiling = 0.98f;
 } // namespace
 
 ZeroJetEngine::ZeroJetEngine()
+    : leftDelay (std::make_unique<DelayBuffer>()),
+      rightDelay (std::make_unique<DelayBuffer>())
 {
     prepare (44100.0);
     reset();
@@ -42,8 +44,8 @@ void ZeroJetEngine::reset() noexcept
     rightFeedback = 0.0f;
     leftDamp = 0.0f;
     rightDamp = 0.0f;
-    leftDelay.fill (0.0f);
-    rightDelay.fill (0.0f);
+    leftDelay->fill (0.0f);
+    rightDelay->fill (0.0f);
 }
 
 void ZeroJetEngine::setParameters (const ZeroJetParameters& parameters) noexcept
@@ -65,8 +67,8 @@ StereoFrame ZeroJetEngine::processSample (float inputLeft, float inputRight) noe
     lfoPhase = wrapUnit (lfoPhase + rateHz / static_cast<float> (sampleRate));
 
     const auto spread = 0.08f + params.zero * 0.34f;
-    const auto wetLeft = processChannel (dryLeft, leftDelay, leftFeedback, leftDamp, spread);
-    const auto wetRight = processChannel (dryRight, rightDelay, rightFeedback, rightDamp, 0.5f - spread);
+    const auto wetLeft = processChannel (dryLeft, *leftDelay, leftFeedback, leftDamp, spread);
+    const auto wetRight = processChannel (dryRight, *rightDelay, rightFeedback, rightDamp, 0.5f - spread);
 
     ++writeIndex;
     if (writeIndex >= maxDelaySamples)
