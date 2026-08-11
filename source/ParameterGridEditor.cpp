@@ -1,6 +1,6 @@
 #include "ParameterGridEditor.h"
 
-#include "FoldVandalPlugin.h"
+#include "ZeroJetPlugin.h"
 
 #include <algorithm>
 #include <cmath>
@@ -61,7 +61,7 @@ ParameterGridEditor::ParameterGridEditor (yup::AudioProcessor& processor,
     , warning (newWarning)
     , accentColor (newAccentColor)
 {
-    zerojetProcessor = dynamic_cast<FoldVandalPlugin*> (&processor);
+    zerojetProcessor = dynamic_cast<ZeroJetPlugin*> (&processor);
 
     const auto processorParameters = processor.getParameters();
     parameters.assign (processorParameters.begin(), processorParameters.end());
