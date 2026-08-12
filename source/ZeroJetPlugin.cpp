@@ -237,7 +237,7 @@ yup::AudioProcessorEditor* ZeroJetPlugin::createEditor()
     return new ParameterGridEditor (*this,
                                     "ZeroJet",
                                     "Dual fractional-delay through-zero flanger with standalone-only audition.",
-                                    0xffd9ff42u);
+                                    0xfff2f2f0u);
 #endif
 }
 
